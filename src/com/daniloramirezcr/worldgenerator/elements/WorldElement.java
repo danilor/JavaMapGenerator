@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class WorldElement {
 
-    private WorldElementTypes type = null;
+    private WorldElementType type = null;
     private Coordinates coord = new Coordinates(0,0);
 
     /**
@@ -27,9 +27,12 @@ public class WorldElement {
      */
     public WorldElement(Coordinates c){
 //        this.type = WorldElementTypes.UNKNOWN;
-        WorldElementTypes[] w = WorldElementTypes.values();
+
+       // System.out.println( WorldElementType.getArrayWithProbabilityFactor() );
+
+        WorldElementType[] w = WorldElementType.getArrayWithProbabilityFactor();
         RandomUtil r = RandomUtil.getInstance();
-        this.type = w[ r.getRandomObject().nextInt( w.length-1 ) ];
+        this.type = w[ r.getRandomObject().nextInt( w.length ) ];
         this.coord = c;
     }
 
@@ -37,7 +40,7 @@ public class WorldElement {
      *
      * @param type
      */
-    public WorldElement(Coordinates c,WorldElementTypes type){
+    public WorldElement(Coordinates c,WorldElementType type){
         this.type = type;
         this.coord = c;
     }
@@ -45,17 +48,17 @@ public class WorldElement {
 
     /**
      *
-     * @return
+     * @return WorldElementType
      */
-    public WorldElementTypes getType() {
+    public WorldElementType getType() {
         return type;
     }
 
     /**
      *
-     * @param type
+     * @param type WorldElementType
      */
-    public void setType(WorldElementTypes type) {
+    public void setType(WorldElementType type) {
         this.type = type;
     }
 
@@ -82,7 +85,7 @@ public class WorldElement {
      * @return boolean
      */
     public boolean isAssigned(){
-        return !(this.type == WorldElementTypes.UNKNOWN);
+        return !(this.type.getIdentifier().equals("U"));
     }
 
 

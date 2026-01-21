@@ -2,6 +2,7 @@ package com.daniloramirezcr.worldgenerator;
 
 import com.daniloramirezcr.worldgenerator.elements.WorldElement;
 
+import com.daniloramirezcr.worldgenerator.elements.WorldElementType;
 import com.daniloramirezcr.worldgenerator.elements.WorldElementTypes;
 import com.daniloramirezcr.worldgenerator.utilities.ConsoleColors;
 import com.daniloramirezcr.worldgenerator.utilities.Coordinates;
@@ -32,7 +33,7 @@ public class World {
     // The seed for the Random generator
     private long seed = Long.parseLong("3199994376661715536"); // The same seed will produce the exact same map, no matter how any times we execute the process.
     // The size of the world
-    private int squaredSize = 35;
+    private int squaredSize = 100;
 
     // The random singleton
     private RandomUtil rand = null;
@@ -51,7 +52,7 @@ public class World {
      * Constructor
      */
     public World() {
-        this.setInitialElementSeederNumber(7);
+        this.setInitialElementSeederNumber(25);
     }
 
     /**
@@ -75,17 +76,19 @@ public class World {
             for (WorldElement worldElement : worldElements) {
 
                 String color = "";
-                if (worldElement.getType() == WorldElementTypes.GRASS) {
-                    color = ConsoleColors.GREEN_BACKGROUND;
+                if (worldElement.getType().getIdentifier().equals("G")) {
+                    color = ConsoleColors.GREEN_BACKGROUND_BRIGHT;
 
-                }else if (worldElement.getType() == WorldElementTypes.DESSERT) {
+                }else if (worldElement.getType().getIdentifier().equals("D")) {
                     color = ConsoleColors.YELLOW_BACKGROUND;
-                }else if (worldElement.getType() == WorldElementTypes.WATER) {
+                }else if (worldElement.getType().getIdentifier().equals("W")) {
                     color = ConsoleColors.BLUE_BACKGROUND;
-                }else if (worldElement.getType() == WorldElementTypes.MOUNTAIN) {
+                }else if (worldElement.getType().getIdentifier().equals("M")) {
                     color = ConsoleColors.BLACK_BACKGROUND;
-                }else if (worldElement.getType() == WorldElementTypes.SWAMP) {
+                }else if (worldElement.getType().getIdentifier().equals("S")) {
                     color = ConsoleColors.PURPLE_BACKGROUND;
+                }else if (worldElement.getType().getIdentifier().equals("F")) {
+                    color = ConsoleColors.GREEN_BACKGROUND;
                 }else{
                     color = ConsoleColors.RESET;
                 }
@@ -112,10 +115,13 @@ public class World {
      * This will initialize all required world elements
      */
     private void initializeWorldElements() {
+        WorldElementType u = new WorldElementType();
+        u.setIdentifier("U");
+        u.setLabel("Unknown");
         this.map = new WorldElement[this.squaredSize][this.squaredSize]; // We defined the map size at once
         for (int i = 0; i < this.map.length; i++) {
             for (int j = 0; j < this.map[i].length; j++) {
-                this.map[i][j] = new WorldElement(new Coordinates(i, j), WorldElementTypes.UNKNOWN);
+                this.map[i][j] = new WorldElement(new Coordinates(i, j), u.clone());
             }
         }
         this.throwSeeds();
@@ -193,8 +199,6 @@ public class World {
     private void assignElementToWorld(WorldElement w) {
         this.map[w.getCoord().x][w.getCoord().y] = w;
     }
-
-
 
     /*
      *
