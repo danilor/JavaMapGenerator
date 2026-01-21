@@ -79,17 +79,17 @@ public class World {
                 if (worldElement.getType().getIdentifier().equals("G")) {
                     color = ConsoleColors.GREEN_BACKGROUND_BRIGHT;
 
-                }else if (worldElement.getType().getIdentifier().equals("D")) {
+                } else if (worldElement.getType().getIdentifier().equals("D")) {
                     color = ConsoleColors.YELLOW_BACKGROUND;
-                }else if (worldElement.getType().getIdentifier().equals("W")) {
+                } else if (worldElement.getType().getIdentifier().equals("W")) {
                     color = ConsoleColors.BLUE_BACKGROUND;
-                }else if (worldElement.getType().getIdentifier().equals("M")) {
+                } else if (worldElement.getType().getIdentifier().equals("M")) {
                     color = ConsoleColors.BLACK_BACKGROUND;
-                }else if (worldElement.getType().getIdentifier().equals("S")) {
+                } else if (worldElement.getType().getIdentifier().equals("S")) {
                     color = ConsoleColors.PURPLE_BACKGROUND;
-                }else if (worldElement.getType().getIdentifier().equals("F")) {
+                } else if (worldElement.getType().getIdentifier().equals("F")) {
                     color = ConsoleColors.GREEN_BACKGROUND;
-                }else{
+                } else {
                     color = ConsoleColors.RESET;
                 }
 
@@ -178,7 +178,7 @@ public class World {
                     }
 
                     boolean completed = this.elementSeeder.get(randomSpace).setNeighbor(d, map[x][y]);
-                    if(completed){
+                    if (completed) {
                         this.elementSeeder.remove(randomSpace);
                     }
                 }
@@ -258,7 +258,7 @@ public class World {
         this.initialElementSeederNumber = initialElementSeederNumber;
     }
 
-    public int getInitialElementSeederNumber(){
+    public int getInitialElementSeederNumber() {
         return this.initialElementSeederNumber;
     }
 

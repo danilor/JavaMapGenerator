@@ -1,5 +1,7 @@
 package com.daniloramirezcr.worldgenerator;
+
 import me.tongfei.progressbar.ProgressBar;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,9 +14,12 @@ import java.io.File;
 
 public class WorldPrinter {
 
+    /**
+     * The World object being use to print
+     */
     private World world;
 
-    private final int blockSize = 100;
+    private int blockSize = 100;
 
     private final String extension = "png";
 
@@ -22,15 +27,25 @@ public class WorldPrinter {
         this.world = world;
     }
 
+
+    public void setBlockSize(int s){
+        this.blockSize = s;
+    }
+
+    public int getBlockSize(){
+        return this.blockSize;
+    }
+
     /**
      * This should generate an image out of a world map
+     *
      * @param name String
-     * @throws Exception
+     * @throws Exception If the world is not full, it will throw an exception
      */
     public void createImage(String name) throws Exception {
 
 
-        if(world.isMapFull()){
+        if (world.isMapFull()) {
             System.out.println("Printing world map");
             // We only work if the map is full
             int width = world.getSquaredSize() * this.blockSize;
@@ -46,27 +61,23 @@ public class WorldPrinter {
             g2d.fillRect(0, 0, width, height);
 
             try (ProgressBar pb = new ProgressBar("Printing World map", (long) this.world.getSquaredSize() * this.world.getSquaredSize())) {
-                for(int x = 0; x < world.getSquaredSize(); x++){
-                    for(int y = 0; y < world.getSquaredSize(); y++){
+                for (int x = 0; x < world.getSquaredSize(); x++) {
+                    for (int y = 0; y < world.getSquaredSize(); y++) {
                         pb.step();
                         g2d.setColor(world.getMap()[x][y].getType().getColor());
-                        g2d.fillRect(x * this.blockSize, y * this.blockSize, (x * this.blockSize) + (this.blockSize -1), (y * this.blockSize) + (this.blockSize -1));
+                        g2d.fillRect(x * this.blockSize, y * this.blockSize, (x * this.blockSize) + (this.blockSize - 1), (y * this.blockSize) + (this.blockSize - 1));
 
                     }
                 }
             }
 
 
-
-
             File file = new File(name + "." + extension);
             ImageIO.write(bufferedImage, extension, file);
 
-        }else{
+        } else {
             throw new Exception("World map must be full to be printable");
         }
-
-
 
 
     }
