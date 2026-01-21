@@ -31,7 +31,7 @@ import java.util.List;
 public class World {
 
     // The seed for the Random generator
-    private long seed = Long.parseLong("3199994376661715536"); // The same seed will produce the exact same map, no matter how any times we execute the process.
+    private long seed = Long.parseLong("1"); // The same seed will produce the exact same map, no matter how any times we execute the process.
     // The size of the world
     private int squaredSize = 100;
 
@@ -45,14 +45,14 @@ public class World {
     private final List<WorldElement> elementSeeder = new ArrayList<>();
 
     // This will hold the initial number of seeds we want to throw to the world. This should be related to the size of the world like 5%
-    private int initialElementSeederNumber;
+    private int initialElementSeederNumber = 35;
 
 
     /**
      * Constructor
      */
     public World() {
-        this.setInitialElementSeederNumber(25);
+
     }
 
     /**
@@ -191,6 +191,7 @@ public class World {
 
     }
 
+
     /**
      * This should assign any element to the map
      *
@@ -255,6 +256,10 @@ public class World {
 
     public void setInitialElementSeederNumber(int initialElementSeederNumber) {
         this.initialElementSeederNumber = initialElementSeederNumber;
+    }
+
+    public int getInitialElementSeederNumber(){
+        return this.initialElementSeederNumber;
     }
 
     public boolean isMapFull() {

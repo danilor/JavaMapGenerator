@@ -1,6 +1,7 @@
 package com.daniloramirezcr.worldgenerator.elements;
 
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,29 +10,31 @@ public class WorldElementType implements Cloneable {
 
     private String identifier = "";
     private String label = "";
-    private String color = "";
+    private Color color = Color.white;
     private int minElevation = 0;
     private int maxElevation = 0;
     private int probabilityFactor = 1; // based upon the other elements
+    private int maxGrowFactor = 0;
 
 
     /**
      * Constructor
      */
-    public WorldElementType(){
+    public WorldElementType() {
 
     }
 
     /**
      * Constructor with all elements
-     * @param identifier String
-     * @param label String
-     * @param color String
-     * @param minElevation int
-     * @param maxElevation int
+     *
+     * @param identifier        String
+     * @param label             String
+     * @param color             Color
+     * @param minElevation      int
+     * @param maxElevation      int
      * @param probabilityFactor int
      */
-    public WorldElementType(String identifier, String label, String color, int minElevation, int maxElevation, int probabilityFactor) {
+    public WorldElementType(String identifier, String label, Color color, int minElevation, int maxElevation, int probabilityFactor) {
         this.identifier = identifier;
         this.label = label;
         this.color = color;
@@ -56,11 +59,11 @@ public class WorldElementType implements Cloneable {
         this.label = label;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -88,12 +91,18 @@ public class WorldElementType implements Cloneable {
         this.probabilityFactor = probabilityFactor;
     }
 
+    public int getMaxGrowFactor() {
+        return maxGrowFactor;
+    }
+
+    public void setMaxGrowFactor(int maxGrowFactor) {
+        this.maxGrowFactor = maxGrowFactor;
+    }
+
     @Override
     public WorldElementType clone() {
         try {
-            WorldElementType clone = (WorldElementType) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
+            return (WorldElementType) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
@@ -101,28 +110,19 @@ public class WorldElementType implements Cloneable {
 
     /**
      * Here is where we define all the type of elements in the world map.
+     *
      * @return WorldElementType[]
      */
-    public static WorldElementType[] getArrayWithProbabilityFactor(){
-        ArrayList <WorldElementType> list = new ArrayList<WorldElementType>();
+    public static WorldElementType[] getArrayWithProbabilityFactor() {
+        ArrayList<WorldElementType> list = new ArrayList<WorldElementType>();
         List<WorldElementType> listWithProbabilityDistribution = new ArrayList<>();
 
 
-        list.add(
-                new WorldElementType("G","GRASS","green",0,4,6)
-        );
-        list.add(
-                new WorldElementType("D","DESERT","yellow",0,2,3)
-        );
-        list.add(
-                new WorldElementType("M","MOUNTAIN","gray",4,16,4)
-        );
-        list.add(
-                new WorldElementType("S","SWAMP","purple",0,4,1)
-        );
-        list.add(
-                new WorldElementType("F","FOREST","darkgreen",0,7,5)
-        );
+        list.add(new WorldElementType("G", "GRASS", new Color(35,250,117), 0, 4, 6));
+        list.add(new WorldElementType("D", "DESERT", new Color(217,211,102), 0, 2, 3));
+        list.add(new WorldElementType("M", "MOUNTAIN", new Color(90,102,94), 4, 16, 4));
+        list.add(new WorldElementType("S", "SWAMP", new Color(140,122,140), 0, 4, 1));
+        list.add(new WorldElementType("F", "FOREST", new Color(29,122,65), 0, 7, 5));
 
         WorldElementType[] types = list.toArray(new WorldElementType[0]);
 
@@ -133,6 +133,7 @@ public class WorldElementType implements Cloneable {
         }
         return listWithProbabilityDistribution.toArray(new WorldElementType[0]);
     }
+
 
 
 }
