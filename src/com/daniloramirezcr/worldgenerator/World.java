@@ -62,7 +62,8 @@ public class World {
         this.prepareRandomness();
         this.initializeWorldElements();
         this.growWorld();
-
+        // this.consolePrint();
+        this.completeWorld();
     }
 
 
@@ -71,29 +72,21 @@ public class World {
      * to be able to see them
      */
     public void consolePrint() {
-        for (WorldElement[] worldElements : this.map) {
+        for (int y = 0; y<this.squaredSize; y++ ) {
             // Iterate through each column in the current row
-            for (WorldElement worldElement : worldElements) {
+            for (int x= 0; x < this.squaredSize; x++) {
 
-                String color = "";
-                if (worldElement.getType().getIdentifier().equals("G")) {
-                    color = ConsoleColors.GREEN_BACKGROUND_BRIGHT;
+                String color = switch (this.map[x][y].getType().getIdentifier()) {
+                    case "G" -> ConsoleColors.GREEN_BACKGROUND_BRIGHT;
+                    case "D" -> ConsoleColors.YELLOW_BACKGROUND;
+                    case "W" -> ConsoleColors.BLUE_BACKGROUND;
+                    case "M" -> ConsoleColors.BLACK_BACKGROUND;
+                    case "S" -> ConsoleColors.PURPLE_BACKGROUND;
+                    case "F" -> ConsoleColors.GREEN_BACKGROUND;
+                    default -> ConsoleColors.RESET;
+                };
 
-                } else if (worldElement.getType().getIdentifier().equals("D")) {
-                    color = ConsoleColors.YELLOW_BACKGROUND;
-                } else if (worldElement.getType().getIdentifier().equals("W")) {
-                    color = ConsoleColors.BLUE_BACKGROUND;
-                } else if (worldElement.getType().getIdentifier().equals("M")) {
-                    color = ConsoleColors.BLACK_BACKGROUND;
-                } else if (worldElement.getType().getIdentifier().equals("S")) {
-                    color = ConsoleColors.PURPLE_BACKGROUND;
-                } else if (worldElement.getType().getIdentifier().equals("F")) {
-                    color = ConsoleColors.GREEN_BACKGROUND;
-                } else {
-                    color = ConsoleColors.RESET;
-                }
-
-                System.out.print(color + worldElement.getElevation() + " " + ConsoleColors.RESET); // Print element followed by a space
+                System.out.print(color + this.map[x][y].getElevation() + " " + ConsoleColors.RESET); // Print element followed by a space
             }
             System.out.println(); // Move to the next line after each row
         }
@@ -186,10 +179,20 @@ public class World {
 
 
         }
-
-//        this.consolePrint();
-
     }
+
+    /**
+     * This should execute after the world is completed. Each element will execute some special steps to
+     * finally complete the map
+     */
+    private void completeWorld(){
+        for (int i = 0; i < this.map.length; i++) {
+            for (int j = 0; j < this.map[i].length; j++) {
+                this.map[i][j].findElevation( (int) this.squaredSize / 4 );
+            }
+        }
+    }
+
 
 
     /**

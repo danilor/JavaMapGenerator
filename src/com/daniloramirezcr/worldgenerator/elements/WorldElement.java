@@ -1,8 +1,11 @@
 package com.daniloramirezcr.worldgenerator.elements;
 import com.daniloramirezcr.worldgenerator.utilities.Coordinates;
 import com.daniloramirezcr.worldgenerator.utilities.Direction;
+import com.daniloramirezcr.worldgenerator.utilities.Math.LinearFunction;
+import com.daniloramirezcr.worldgenerator.utilities.Math.Point;
 import com.daniloramirezcr.worldgenerator.utilities.RandomUtil;
-import java.util.UUID;
+
+import java.util.*;
 
 public class WorldElement {
 
@@ -134,14 +137,67 @@ public class WorldElement {
         return elevation;
     }
 
-    /**
-     * Sets the current terrain eleveation
-     *
-     * @param elevation int Elevation number. It should be between 0 and 256. No negative numbers please.
-     */
-    public void setElevation(int elevation) {
-        this.elevation = elevation;
+
+
+    public void findElevation(int maxFactor){
+        List<Integer> distances = new ArrayList<Integer>();
+
+        distances.add( this.getNorthDistance(0) );
+        distances.add( this.getSouthDistance(0) );
+        distances.add( this.getEastDistance(0) );
+        distances.add( this.getWestDistance(0) );
+
+        Collections.sort(distances);
+        /*
+        min_elevation / min_distance @ max_elevation[X] / max_distance
+         */
+
+        int minValue = distances.get(0);
+        int maxValue = distances.get(distances.size() -1);
+
+        Point p1 = new Point(0,this.type.getMinElevation());
+        Point p2 = new Point(maxFactor, this.type.getMaxElevation());
+
+        LinearFunction f = new LinearFunction(p1,p2);
+
+        int gotElevation = (int)f.getY( minValue );
+
+        this.elevation = gotElevation;
+
     }
+
+
+    public int getNorthDistance(int accumulator){
+        if( this.north.type.getIdentifier().equals( this.type.getIdentifier() ) && !this.north.getId().equals(this.getId())  ){
+            accumulator = this.north.getNorthDistance(accumulator+1);
+        }
+
+        return accumulator;
+    }
+
+    public int getSouthDistance(int accumulator){
+        if( this.south.type.getIdentifier().equals( this.type.getIdentifier() ) && !this.south.getId().equals(this.getId())  ){
+            accumulator = this.south.getSouthDistance(accumulator+1);
+        }
+
+        return accumulator;
+    }
+
+    public int getEastDistance(int accumulator){
+        if( this.east.type.getIdentifier().equals( this.type.getIdentifier() ) && !this.east.getId().equals(this.getId())  ){
+            accumulator = this.east.getEastDistance(accumulator+1);
+        }
+        return accumulator;
+    }
+
+    public int getWestDistance(int accumulator){
+        if( this.west.type.getIdentifier().equals( this.type.getIdentifier() ) && !this.west.getId().equals(this.getId())  ){
+            accumulator = this.west.getWestDistance(accumulator+1);
+        }
+        return accumulator;
+    }
+
+
 
     /**
      * It will generate an automatic uuid for this element.
@@ -152,5 +208,9 @@ public class WorldElement {
         UUID uuid = UUID.randomUUID();
         this.id = uuid.toString();
         return this.id;
+    }
+
+    public String getId() {
+        return id;
     }
 }
