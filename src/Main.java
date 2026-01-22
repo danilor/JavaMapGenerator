@@ -18,7 +18,7 @@ public class Main {
 
         World world = new World();
         world.setSeed(r.nextLong()); // The seeder for this map
-        world.setSquaredSize(500); // The squared map size. This is the size of each side
+        world.setSquaredSize(200); // The squared map size. This is the size of each side
         world.setInitialElementSeederNumber(21); // The number of initial seeds into the map
 
         System.out.println("Squared Size: " + world.getSquaredSize());
@@ -33,12 +33,12 @@ public class Main {
         wp.setBlockSize(15);
 
         try {
-            wp.createImage(Long.toString(world.getSeed()));
+            wp.createImage(Long.toString(world.getSeed()),"results/");
         } catch (Exception e) {
             System.out.println("Image could not be created");
         }
 
-        world.consolePrint();
+        // world.consolePrint();
 
     }
 }

@@ -28,11 +28,11 @@ public class WorldPrinter {
     }
 
 
-    public void setBlockSize(int s){
+    public void setBlockSize(int s) {
         this.blockSize = s;
     }
 
-    public int getBlockSize(){
+    public int getBlockSize() {
         return this.blockSize;
     }
 
@@ -43,8 +43,10 @@ public class WorldPrinter {
      * @throws Exception If the world is not full, it will throw an exception
      */
     public void createImage(String name) throws Exception {
+        this.createImage(name, "");
+    }
 
-
+    public void createImage(String name, String folder) throws Exception {
         if (world.isMapFull()) {
             System.out.println("Printing world map");
             // We only work if the map is full
@@ -52,8 +54,6 @@ public class WorldPrinter {
             int height = world.getSquaredSize() * this.blockSize;
 
             BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-
             Graphics2D g2d = bufferedImage.createGraphics();
 
             // Fill the whole background as white
@@ -72,13 +72,11 @@ public class WorldPrinter {
             }
 
 
-            File file = new File(name + "." + extension);
+            File file = new File(folder + name + "." + extension);
             ImageIO.write(bufferedImage, extension, file);
 
         } else {
             throw new Exception("World map must be full to be printable");
         }
-
-
     }
 }
