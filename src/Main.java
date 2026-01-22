@@ -19,8 +19,8 @@ public class Main {
         World world = new World();
         world.setSeed(r.nextLong()); // The seeder for this map
         //  world.setSeed( Long.parseLong("12345678") );
-        world.setSquaredSize(150); // The squared map size. This is the size of each side
-        world.setInitialElementSeederNumber(21); // The number of initial seeds into the map
+        world.setSquaredSize(300); // The squared map size. This is the size of each side
+        world.setInitialElementSeederNumber(60); // The number of initial seeds into the map
 
         System.out.println("Squared Size: " + world.getSquaredSize());
         System.out.println("Seeder Pool Size: " + world.getInitialElementSeederNumber());
@@ -31,7 +31,7 @@ public class Main {
         world.consolePrint();
 
         WorldPrinter wp = new WorldPrinter(world);
-        wp.setBlockSize(15);
+        wp.setBlockSize(50);
 
         try {
             wp.createImage(Long.toString(world.getSeed()),"results/");

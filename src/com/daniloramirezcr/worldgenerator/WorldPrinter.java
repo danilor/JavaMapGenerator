@@ -64,8 +64,14 @@ public class WorldPrinter {
                 for (int x = 0; x < world.getSquaredSize(); x++) {
                     for (int y = 0; y < world.getSquaredSize(); y++) {
                         pb.step();
-                        g2d.setColor(world.getMap()[x][y].getType().getColor());
+                        int borderSize = 2;
+                        g2d.setColor(Color.black);
                         g2d.fillRect(x * this.blockSize, y * this.blockSize, (x * this.blockSize) + (this.blockSize - 1), (y * this.blockSize) + (this.blockSize - 1));
+                        g2d.setColor(world.getMap()[x][y].getType().getColor());
+                        g2d.fillRect(x * this.blockSize + borderSize, y * this.blockSize + borderSize, (x * this.blockSize) + (this.blockSize - 1) - borderSize, (y * this.blockSize) + (this.blockSize - 1) - borderSize);
+                        g2d.setColor(Color.white);
+                        g2d.setFont(new Font("TimesRoman", Font.PLAIN,  (int)(this.blockSize / 1.5) ));
+                        g2d.drawString( Integer.toString(world.getMap()[x][y].getElevation()) ,(x * this.blockSize) + borderSize, (y * this.blockSize) + (int)(this.blockSize / 1.5) );
 
                     }
                 }

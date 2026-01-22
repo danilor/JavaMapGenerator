@@ -118,12 +118,12 @@ public class WorldElementType implements Cloneable {
         List<WorldElementType> listWithProbabilityDistribution = new ArrayList<>();
 
 
-        list.add(new WorldElementType("G", "GRASS", new Color(35, 250, 117), 0, 4, 6));
-        list.add(new WorldElementType("D", "DESERT", new Color(217, 211, 102), 0, 2, 3));
-        list.add(new WorldElementType("M", "MOUNTAIN", new Color(90, 102, 94), 4, 16, 4));
+        list.add(new WorldElementType("G", "GRASS", new Color(35, 250, 117), 0, 4, 12));
+        list.add(new WorldElementType("D", "DESERT", new Color(217, 211, 102), 0, 2, 6));
+        list.add(new WorldElementType("M", "MOUNTAIN", new Color(90, 102, 94), 4, 16, 8));
         list.add(new WorldElementType("S", "SWAMP", new Color(250, 172, 250), 0, 2, 1));
-        list.add(new WorldElementType("F", "FOREST", new Color(29, 122, 65), 0, 7, 5));
-
+        list.add(new WorldElementType("F", "FOREST", new Color(29, 122, 65), 0, 7, 10));
+        list.add(new WorldElementType("T", "TOWN", new Color(87, 71, 64), 0, 3, 2));
         WorldElementType[] types = list.toArray(new WorldElementType[0]);
 
         for (WorldElementType type : types) {
