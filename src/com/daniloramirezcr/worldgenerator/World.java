@@ -186,11 +186,13 @@ public class World {
      * finally complete the map
      */
     private void completeWorld(){
-        for (int i = 0; i < this.map.length; i++) {
-            for (int j = 0; j < this.map[i].length; j++) {
-                this.map[i][j].findElevation( (int) this.squaredSize / 4 );
-            }
-        }
+       if(this.isMapFull()){
+           for (int i = 0; i < this.map.length; i++) {
+               for (int j = 0; j < this.map[i].length; j++) {
+                   this.map[i][j].findElevation( (int) this.squaredSize / 5 );
+               }
+           }
+       }
     }
 
 
